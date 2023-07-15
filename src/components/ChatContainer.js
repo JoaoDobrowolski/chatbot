@@ -6,20 +6,32 @@ export default function ChatContainer() {
   const [inputValue, setInputValue] = useState('');
   const [lastInput, setLastInput] = useState('');
   const [chatLog, setChatLog] = useState([]);
-  // const [answer, setAnswer] = useState('');
   const [submit, setSubmit] = useState(false);
+  const [showOpt, setShowOpt] = useState(true);
+  const [showLink, setShowLink] = useState(false);
+  const [wichLink, setWichLink] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    developAnswer();
+    developAnswer('bot', interpreter(lastInput));
   }, [submit]);
 
-  const developAnswer = () => {
-    if (typeof interpreter(lastInput) === 'string') {
+  const developAnswer = (type, message) => {
+    if (typeof message === 'string') {
       setChatLog((prevChatLog) => [
         ...prevChatLog,
-        { type: 'bot', message: interpreter(lastInput) }
+        { type, message }
       ]);
+      setShowLink(false);
+    }
+
+    if (typeof message === 'object') {
+      setChatLog((prevChatLog) => [
+        ...prevChatLog,
+        { type, message: message.text }
+      ]);
+      setShowLink(true);
+      setWichLink(message.reference);
     }
   };
 
@@ -35,15 +47,37 @@ export default function ChatContainer() {
     setSubmit(!submit);
   };
 
+  const handleOptions = (event) => {
+    event.preventDefault();
+
+    const msg = (event.target.innerText.startsWith('Do')
+      ? 'I want to apply for a loan'
+      : event.target.innerText);
+
+    setShowOpt(false);
+    developAnswer('user', msg);
+    developAnswer('bot', interpreter(msg));
+  };
+
   return (
     <div>
       {
         chatLog.map((msg, i) => (
           <div key={i}>
-            {msg.message}
+            <p>{msg.message}</p>
           </div>
         ))
       }
+      {showOpt && (
+        <div>
+          <p onClick={(e) => handleOptions(e)}>Do you want to apply for a loan?</p >
+          <p onClick={(e) => handleOptions(e)}>Loan conditions</p>
+          <p onClick={(e) => handleOptions(e)}>Help</p>
+        </div>
+      )}
+      {showLink && (
+        <a href={wichLink} target="_blank" rel="noreferrer">Reference</a>
+      )}
       <form onSubmit={handleSubmit}>
         <input
           id="input"
