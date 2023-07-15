@@ -2,16 +2,19 @@ export default function interpreter(term) {
   if (term) {
     const termLC = term.toLowerCase();
     if (termLC.startsWith('hello') || termLC.startsWith('hi')) {
-      return 'Hi';
+      return 'Hi!';
     }
-    if (termLC.match('help')) { // also works for Goodbye
-      return 'HELP';
+    if (termLC.match('help')) {
+      return 'Of course! I\'m here to help! If you want to know more about loans, type "loan"';
     }
-    if (termLC.match('goodbye')) { // also works for Goodbye
+    if (termLC.match('goodbye')) {
       return 'See you later';
     }
     if (termLC.match('loan conditions')) {
-      return 'LOAN CONDITIONS';
+      return {
+        text: 'Loan conditions encompass factors such as interest rates, loan amounts, repayment terms, schedules, collateral requirements, credit scores, and fees. It\'s crucial to thoroughly understand these conditions before agreeing to a loan.',
+        reference: 'https://www.forbes.com/advisor/loans/what-are-loan-terms/'
+      };
     }
     if (termLC.match('i want') && termLC.match('loan')) {
       return {

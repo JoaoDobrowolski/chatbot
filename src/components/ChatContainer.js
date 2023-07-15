@@ -7,7 +7,7 @@ export default function ChatContainer() {
   const [lastInput, setLastInput] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [submit, setSubmit] = useState(false);
-  const [showOpt, setShowOpt] = useState(true);
+  const [showOpt, setShowOpt] = useState(false);
   const [showLink, setShowLink] = useState(false);
   const [wichLink, setWichLink] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,11 @@ export default function ChatContainer() {
         ...prevChatLog,
         { type, message }
       ]);
+      setShowOpt(false);
       setShowLink(false);
+      if (message.startsWith('Please')) {
+        setShowOpt(true);
+      }
     }
 
     if (typeof message === 'object') {
@@ -87,6 +91,7 @@ export default function ChatContainer() {
           autoFocus="true"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          disabled={false}
         />
         <button type="submit" >
           Send
