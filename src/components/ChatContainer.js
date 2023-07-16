@@ -1,6 +1,7 @@
 'use client'; // turn the server component into a client component
 import interpreter from '@/app/helpers/interpreter';
 import React, { useEffect, useState } from 'react';
+import Login from './Login';
 
 export default function ChatContainer() {
   const [inputValue, setInputValue] = useState('');
@@ -10,6 +11,8 @@ export default function ChatContainer() {
   const [showOpt, setShowOpt] = useState(false);
   const [showLink, setShowLink] = useState(false);
   const [wichLink, setWichLink] = useState(false);
+  const [geStarted, setGetStarted] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -26,6 +29,9 @@ export default function ChatContainer() {
       setShowLink(false);
       if (message.startsWith('Please')) {
         setShowOpt(true);
+      }
+      if (message.startsWith('Hello')) {
+        setShowLogin(true);
       }
     }
 
@@ -46,6 +52,7 @@ export default function ChatContainer() {
       ...prevChatLog,
       { type: 'user', message: inputValue }
     ]);
+    setGetStarted(false);
     setLastInput(inputValue);
     setInputValue('');
     setSubmit(!submit);
@@ -64,7 +71,13 @@ export default function ChatContainer() {
   };
 
   return (
-    <div>
+    <div className="container mx-auto max-w-[700px]">
+      <h1 className="bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text text-center py-3 font-bold text-6x1">ChatTT</h1>
+      {geStarted && (
+        <div>
+          <p>New here? Say hi to us!</p>
+        </div>
+      )}
       {
         chatLog.map((msg, i) => (
           <div key={i}>
@@ -82,6 +95,11 @@ export default function ChatContainer() {
       {showLink && (
         <a href={wichLink} target="_blank" rel="noreferrer">Reference</a>
       )}
+      {showLogin && (
+        <div>
+          <Login />
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <input
           id="input"
@@ -91,7 +109,7 @@ export default function ChatContainer() {
           autoFocus="true"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          disabled={false}
+          disabled={showLogin}
         />
         <button type="submit" >
           Send
