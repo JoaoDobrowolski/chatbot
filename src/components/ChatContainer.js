@@ -1,9 +1,11 @@
 'use client'; // turn the server component into a client component
 import interpreter from '@/app/helpers/interpreter';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Login from './Login';
+import ChatBotContext from '@/context/ChatBotContext';
 
 export default function ChatContainer() {
+  const { formData, logged } = useContext(ChatBotContext);
   const [inputValue, setInputValue] = useState('');
   const [lastInput, setLastInput] = useState('');
   const [chatLog, setChatLog] = useState([]);
@@ -70,6 +72,12 @@ export default function ChatContainer() {
     developAnswer('bot', interpreter(msg));
   };
 
+  // reference: https://pt.stackoverflow.com/questions/272228/react-como-modificar-um-estado-do-componente-pai-a-partir-do-filho
+  const onChildChanged = (bool) => {
+    setShowLogin(bool);
+    developAnswer('bot', `Welcome ${formData.username}!`);
+  };
+
   return (
     <div className="container mx-auto max-w-[700px]">
       <h1 className="bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text text-center py-3 font-bold text-6x1">ChatTT</h1>
@@ -95,9 +103,9 @@ export default function ChatContainer() {
       {showLink && (
         <a href={wichLink} target="_blank" rel="noreferrer">Reference</a>
       )}
-      {showLogin && (
+      {showLogin && !logged && (
         <div>
-          <Login />
+          <Login callbackParent={(bool) => onChildChanged(bool)} />
         </div>
       )}
       <form onSubmit={handleSubmit}>

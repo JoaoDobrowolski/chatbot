@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import ChatBotContext from '@/context/ChatBotContext';
 
-export default function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+export default function Login({ ...props }) {
+  const { formData, setFormData, setLogged } = useContext(ChatBotContext);
+
+  // const [formData, setFormData] = useState({
+  //   username: '',
+  //   password: '',
+  // });
   const [error, setError] = useState('');
 
   const handleFormEdit = (event, name) => {
@@ -17,7 +21,8 @@ export default function Login() {
   const handleForm = async (event) => {
     try {
       event.preventDefault();
-      // send prop -> chat container 'showLogin' to false
+      props.callbackParent(false);
+      setLogged(true);
     } catch (err) {
       setError(err.message);
     }
@@ -27,11 +32,12 @@ export default function Login() {
     <div>
       <form onSubmit={handleForm}>
         <input
-          type="email"
-          placeholder="email"
-          value={formData.email}
+          type="text"
+          placeholder="username"
+          value={formData.username}
           required
-          onChange={(event) => { handleFormEdit(event, 'email'); }}
+          onChange={(event) => { handleFormEdit(event, 'username'); }}
+          autoFocus="true"
         />
         <input
           type="password"
@@ -48,3 +54,7 @@ export default function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  callbackParent: PropTypes.func.isRequired,
+};

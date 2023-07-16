@@ -1,7 +1,10 @@
-import React from 'react';
+import ChatBotContext from '@/context/ChatBotContext';
+import React, { useContext } from 'react';
 
 export default function Header() {
+  const { formData, logged } = useContext(ChatBotContext);
+
   return (
-    <p>Header</p>
+    <p>{logged && formData.username}</p>
   );
 }
