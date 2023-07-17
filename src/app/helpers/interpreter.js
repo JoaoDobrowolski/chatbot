@@ -2,7 +2,7 @@ export default function interpreter(term) {
   if (term) {
     const termLC = term.toLowerCase();
     if (termLC.startsWith('hello') || termLC.startsWith('hi')) {
-      return 'Hello! To continue this conversation, please Sign In';
+      return 'Hello! Ask me anything...';
     }
     if (termLC.match('help')) {
       return 'Of course! I\'m here to help! If you want to know more about loans, type "loan"';

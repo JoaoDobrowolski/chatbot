@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styles from './page.module.css';
+// import styles from './page.module.css';
 import ChatContainer from '@/components/ChatContainer';
 import Header from '@/components/Header';
 import ChatBotProvider from '@/context/ChatBotProvider';
@@ -10,7 +10,7 @@ export default function Home() {
     <div>
       <ChatBotProvider>
         <Header />
-        <ChatContainer className={styles.main} />
+        <ChatContainer />
       </ChatBotProvider>
     </div>
   );
