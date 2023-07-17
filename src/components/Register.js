@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import PropTypes from 'prop-types';
 import ChatBotContext from '@/context/ChatBotContext';
 
-export default function Login({ ...props }) {
+export default function Register() {
   const { formData, setFormData, setLogged, setRegister } = useContext(ChatBotContext);
 
   const [error, setError] = useState('');
@@ -18,16 +17,15 @@ export default function Login({ ...props }) {
     try {
       event.preventDefault();
 
-      const response = await fetch('/api/user/login', {
+      const response = await fetch('/api/user/register', {
         method: 'POST',
         body: JSON.stringify(formData)
       });
 
       const json = await response.json();
-      if (response.status !== 200) throw new Error(json);
-
-      props.callbackParent();
-      setLogged(true);
+      if (response.status !== 201) throw new Error(json);
+      setLogged(false);
+      setRegister(false);
     } catch (err) {
       setError(err.message);
     }
@@ -57,26 +55,20 @@ export default function Login({ ...props }) {
           <button
             className="border m-1 mt-5 bg-purple-700 rounded-lg px-4 py-2 text-white font-semibold focus:outline-none hover:bg-purple-800 transition-colors duration-300"
           >
-            Sign In</button>
+            Sign Up</button>
           <button
             className="p-5 pt-7 pr-10 cursor-pointer"
             onClick={() => {
-              setLogged(true);
-              setRegister(true);
+              setLogged(false);
+              setRegister(false);
             }}
           >
-            New here? Sign up!</button>
+            Been here before?</button>
         </div>
-        {
-          error && (
-            <p>{error}</p>
-          )
-        }
-      </form >
-    </div >
+        {error && (
+          <p>{error}</p>
+        )}
+      </form>
+    </div>
   );
 }
-
-Login.propTypes = {
-  callbackParent: PropTypes.func.isRequired,
-};

@@ -1,11 +1,12 @@
 'use client'; // turn the server component into a client component
-import interpreter from '@/app/helpers/interpreter';
+import interpreter from '@/helpers/interpreter';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Login from './Login';
 import ChatBotContext from '@/context/ChatBotContext';
+import Register from './Register';
 
 export default function ChatContainer() {
-  const { formData, logged } = useContext(ChatBotContext);
+  const { formData, logged, register } = useContext(ChatBotContext);
   const [inputValue, setInputValue] = useState('');
   const [lastInput, setLastInput] = useState('');
   const [chatLog, setChatLog] = useState([]);
@@ -70,12 +71,20 @@ export default function ChatContainer() {
     developAnswer('bot', interpreter(msg));
   };
 
+
   // reference: https://pt.stackoverflow.com/questions/272228/react-como-modificar-um-estado-do-componente-pai-a-partir-do-filho
   const onChildChanged = () => {
     developAnswer('bot', `Welcome ${formData.username}!`);
   };
 
-  const chatContainerRef = useRef(null);
+  const inputRef = useRef(null); // to focus on input
+  const chatContainerRef = useRef(null); // to scroll down
+
+  useEffect(() => {
+    inputRef.current.focus();
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [logged, showOpt]);
+
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -128,10 +137,18 @@ export default function ChatContainer() {
               )}
               {chatLog.length !== 0 && !logged && (
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 font-bold rounded-lg p-4 max-w-sm flex justify-center flex-col">
-                  <p className="p-3">Sign in to continue this conversation</p>
+                  <p className="p-3 pl-4">Sign in to continue this conversation</p>
                   <Login callbackParent={() => onChildChanged()} />
                 </div>
               )}
+              {chatLog.length !== 0 && register && (
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 font-bold rounded-lg p-4 max-w-sm flex justify-center flex-col">
+                  <p className="p-3 pl-5">Join us now!</p>
+                  <Register />
+                </div>
+              )
+
+              }
             </div>
           </div>
           <form onSubmit={handleSubmit} className="fixed bottom-0 p-6">
@@ -146,6 +163,7 @@ export default function ChatContainer() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 disabled={chatLog.length !== 0 && !logged}
+                ref={inputRef}
               />
               <button
                 className="bg-purple-500 rounded-lg px-4 py-2 text-white font-semibold focus:outline-none hover:bg-purple-600 transition-colors duration-300"
