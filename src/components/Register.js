@@ -1,8 +1,10 @@
+'use client';
 import React, { useContext, useState } from 'react';
 import ChatBotContext from '@/context/ChatBotContext';
+import { fetchRegister } from '@/services/fetchData';
 
 export default function Register() {
-  const { formData, setFormData, setLogged, setRegister } = useContext(ChatBotContext);
+  const { formData, setFormData, setLogged, setShowRegister, setShowLogin } = useContext(ChatBotContext);
 
   const [error, setError] = useState('');
 
@@ -17,15 +19,11 @@ export default function Register() {
     try {
       event.preventDefault();
 
-      const response = await fetch('/api/user/register', {
-        method: 'POST',
-        body: JSON.stringify(formData)
-      });
+      await fetchRegister(formData);
 
-      const json = await response.json();
-      if (response.status !== 201) throw new Error(json);
       setLogged(false);
-      setRegister(false);
+      setShowRegister(false);
+      setShowLogin(true);
     } catch (err) {
       setError(err.message);
     }
@@ -59,8 +57,8 @@ export default function Register() {
           <button
             className="p-5 pt-7 pr-10 cursor-pointer"
             onClick={() => {
-              setLogged(false);
-              setRegister(false);
+              setShowLogin(true);
+              setShowRegister(false);
             }}
           >
             Been here before?</button>

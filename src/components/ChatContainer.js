@@ -6,7 +6,7 @@ import ChatBotContext from '@/context/ChatBotContext';
 import Register from './Register';
 
 export default function ChatContainer() {
-  const { formData, logged, register } = useContext(ChatBotContext);
+  const { formData, logged, showLogin, showRegister } = useContext(ChatBotContext);
   const [inputValue, setInputValue] = useState('');
   const [lastInput, setLastInput] = useState('');
   const [chatLog, setChatLog] = useState([]);
@@ -135,13 +135,13 @@ export default function ChatContainer() {
                 <a className="bg-gradient-to-r from-blue-500 to-purple-500 py-3 font-bold rounded-lg p-4 text-white max-w-sm flex justify-center"
                   href={wichLink} target="_blank" rel="noreferrer">Reference</a>
               )}
-              {chatLog.length !== 0 && !logged && (
+              {chatLog.length !== 0 && !logged && showLogin && (
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 font-bold rounded-lg p-4 max-w-sm flex justify-center flex-col">
                   <p className="p-3 pl-4">Sign in to continue this conversation</p>
                   <Login callbackParent={() => onChildChanged()} />
                 </div>
               )}
-              {chatLog.length !== 0 && register && (
+              {chatLog.length !== 0 && !logged && showRegister && (
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 font-bold rounded-lg p-4 max-w-sm flex justify-center flex-col">
                   <p className="p-3 pl-5">Join us now!</p>
                   <Register />

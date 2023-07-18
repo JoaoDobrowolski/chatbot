@@ -8,7 +8,8 @@ function ChatBotProvider({ children }) {
     password: '',
   });
   const [logged, setLogged] = useState(false);
-  const [register, setRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
+  const [showRegister, setShowRegister] = useState(false);
 
 
   const contextValue = {
@@ -16,8 +17,10 @@ function ChatBotProvider({ children }) {
     setFormData,
     logged,
     setLogged,
-    register,
-    setRegister,
+    showRegister,
+    setShowRegister,
+    showLogin,
+    setShowLogin,
   };
 
   return (

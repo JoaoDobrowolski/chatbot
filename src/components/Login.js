@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import ChatBotContext from '@/context/ChatBotContext';
+import { fetchLogin } from '@/services/fetchData';
 
 export default function Login({ ...props }) {
-  const { formData, setFormData, setLogged, setRegister } = useContext(ChatBotContext);
+  const { formData, setFormData, setLogged, setShowLogin, setShowRegister } = useContext(ChatBotContext);
 
   const [error, setError] = useState('');
 
@@ -18,16 +19,11 @@ export default function Login({ ...props }) {
     try {
       event.preventDefault();
 
-      const response = await fetch('/api/user/login', {
-        method: 'POST',
-        body: JSON.stringify(formData)
-      });
-
-      const json = await response.json();
-      if (response.status !== 200) throw new Error(json);
+      await fetchLogin(formData);
 
       props.callbackParent();
       setLogged(true);
+      setShowLogin(false);
     } catch (err) {
       setError(err.message);
     }
@@ -61,8 +57,8 @@ export default function Login({ ...props }) {
           <button
             className="p-5 pt-7 pr-10 cursor-pointer"
             onClick={() => {
-              setLogged(true);
-              setRegister(true);
+              setShowRegister(true);
+              setShowLogin(false);
             }}
           >
             New here? Sign up!</button>
