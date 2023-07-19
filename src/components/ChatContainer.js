@@ -85,12 +85,14 @@ export default function ChatContainer() {
     setShowOpt(false);
     developAnswer('user', msg);
     developAnswer('bot', interpreter(msg));
+    scrollToBottom();
   };
 
 
   // reference: https://pt.stackoverflow.com/questions/272228/react-como-modificar-um-estado-do-componente-pai-a-partir-do-filho
   const onChildChanged = () => {
     developAnswer('bot', `Welcome ${formData.username}!`);
+    developAnswer('bot', 'Send "loan" to see our options. Send "help" to learn more about the chat');
   };
 
   const inputRef = useRef(null); // to focus on input
@@ -143,13 +145,28 @@ export default function ChatContainer() {
             <div className="flex flex-col space-y-4">
               {showOpt && (
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 py-3 font-bold rounded-lg p-4 text-white max-w-sm flex justify-center flex-col">
-                  <p className="cursor-pointer" onClick={(e) => handleOptions(e)}>Do you want to apply for a loan?</p >
-                  <p className="cursor-pointer" onClick={(e) => handleOptions(e)}>Loan conditions</p>
-                  <p className="cursor-pointer" onClick={(e) => handleOptions(e)}>Help</p>
+                  <p
+                    className="cursor-pointer bg-purple-400 rounded-lg px-4 py-2 text-black font-semibold focus:outline-none hover:bg-purple-600 transition-colors duration-300 border m-1"
+                    onClick={(e) => handleOptions(e)}
+                  >
+                    Do you want to apply for a loan?
+                  </p >
+                  <p
+                    className="cursor-pointer bg-purple-400 rounded-lg px-4 py-2 text-black font-semibold focus:outline-none hover:bg-purple-600 transition-colors duration-300 border m-1"
+                    onClick={(e) => handleOptions(e)}
+                  >
+                    Loan conditions
+                  </p>
+                  <p
+                    className="cursor-pointer bg-purple-400 rounded-lg px-4 py-2 text-black font-semibold focus:outline-none hover:bg-purple-600 transition-colors duration-300 border m-1"
+                    onClick={(e) => handleOptions(e)}
+                  >
+                    Help
+                  </p>
                 </div>
               )}
               {showLink && (
-                <a className="bg-gradient-to-r from-blue-500 to-purple-500 py-3 font-bold rounded-lg p-4 text-white max-w-sm flex justify-center"
+                <a className="cursor-pointer bg-purple-400 rounded-lg px-4 py-2 text-black font-semibold focus:outline-none hover:bg-purple-600 transition-colors duration-300 border m-1"
                   href={wichLink} target="_blank" rel="noreferrer">Reference</a>
               )}
               {chatLog.length !== 0 && !logged && showLogin && (

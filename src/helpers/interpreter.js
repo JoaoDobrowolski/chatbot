@@ -5,7 +5,7 @@ export default function interpreter(term) {
       return 'Hello! Ask me anything...';
     }
     if (termLC.match('help')) {
-      return 'Of course! I\'m here to help! If you want to know more about loans, type "loan"';
+      return 'Of course! I\'m here to help! If you want to know more about loans, type "loan". To end and storage the conversation, just say "goodbye". If you want to access the history, click on your username at the Header, but if you want to get back here, click on "ChatTT"';
     }
     if (termLC.match('goodbye')) {
       return 'See you later. To access the chat history click on your username in the Header';

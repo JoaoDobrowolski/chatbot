@@ -43,10 +43,10 @@ export default function history() {
           <div className="flex flex-col h-screen overflow-y-auto">
             <div className="flex justify-center pt-32 font-bold">
               <button
-                className="m-1 bg-gradient-to-r from-blue-500 to-purple-500 py-3 font-bold rounded-lg p-4 text-white max-w-sm flex justify-center"
+                className="cursor-pointer bg-purple-400 rounded-lg px-4 py-2 text-black font-semibold focus:outline-none hover:bg-purple-600 transition-colors duration-300 border m-1"
                 onClick={() => setIsFiltered(!isFiltered)}
               >
-                {isFiltered ? 'SPY OTHER USER CHATS' : 'I REGRETTED'}
+                {isFiltered ? 'SPY ON OTHER USER CHATS' : 'I REGRETTED'}
               </button>
             </div>
             {isLoading
