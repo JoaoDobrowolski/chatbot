@@ -11,7 +11,8 @@ function ChatBotProvider({ children }) {
   const [logged, setLogged] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
-
+  const [isFiltered, setIsFiltered] = useState(true);
+  const [blink, setBlink] = useState(false);
 
   const contextValue = {
     formData,
@@ -22,6 +23,10 @@ function ChatBotProvider({ children }) {
     setShowRegister,
     showLogin,
     setShowLogin,
+    isFiltered,
+    setIsFiltered,
+    blink,
+    setBlink
   };
 
   return (

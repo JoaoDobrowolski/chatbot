@@ -17,7 +17,6 @@ export default function ChatContainer() {
   const [showLink, setShowLink] = useState(false);
   const [wichLink, setWichLink] = useState(false);
   const [geStarted, setGetStarted] = useState(true);
-  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     developAnswer('bot', interpreter(lastInput));
@@ -169,10 +168,10 @@ export default function ChatContainer() {
               }
             </div>
           </div>
-          <form onSubmit={handleSubmit} className="fixed bottom-0 p-6">
+          <form onSubmit={handleSubmit} className="fixed bottom-0 p-6 left-1/2 transform -translate-x-1/2">
             <div className="flex rounded-lg border border-gray-700 bg-gray-800">
               <input
-                className="px-4 pr-60 py-2 w-auto bg-transparent text-white focus:outline-none"
+                className="px-4 flex-grow py-2 w-auto bg-transparent text-white focus:outline-none"
                 id="input"
                 type="text"
                 placeholder="Write something..."

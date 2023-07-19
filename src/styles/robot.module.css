@@ -1,0 +1,57 @@
+.robotface {
+  width: 100px;
+  height: 68px;
+  background-color: #F3F4F6;
+  border-radius: 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.leftblink {
+  width: 26px;
+  height: 8px;
+  background-color: #000;
+  position: absolute;
+  top: 20px;
+  left: 18px;
+}
+
+.lefteye {
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 14px;
+  left: 20px;
+}
+
+.rightblink {
+  width: 26px;
+  height: 8px;
+  background-color: #000;
+  position: absolute;
+  top: 20px;
+  right: 18px;
+}
+
+.righteye {
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 14px;
+  right: 20px;
+}
+
+.mouth {
+  width: 50px;
+  height: 10px;
+  background-color: #000;
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0% 0% 50% 50%;
+}

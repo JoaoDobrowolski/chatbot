@@ -25,6 +25,7 @@ export async function register(body) {
     await dbConnection();
     const registered = await userModel.find({ username: body.username });
     if (registered.length > 0) throw new Error('User already registered');
+    if (body.password.length < 6) throw new Error('Password must contain at least 6 digits');
     const newUser = new userModel(body);
     await newUser.save();
     const token = createToken(body);
@@ -48,26 +49,3 @@ export async function login(body) {
     throw new Error(err.message);
   }
 }
-
-// export async function conversation(body) {
-//   try {
-//     await dbConnection();
-//     const userLoginArray = await userModel.find({ username: body.username });
-//     const userLogin = userLoginArray[0];
-//     if (!userLogin) throw new Error('User not found');
-//     if (userLogin.password !== body.password) throw new Error('Incorrect password');
-
-//     return body;
-//   } catch (err) {
-//     throw new Error(err.message);
-//   }
-// }
-
-// export async function chat() {
-//   await dbConnection();
-
-//   const data = await userModel.find().lean();
-//   if (!data) throw new Error('data not found');
-
-//   return (data);
-// }
