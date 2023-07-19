@@ -5,6 +5,7 @@ import Login from './Login';
 import ChatBotContext from '@/context/ChatBotContext';
 import Register from './Register';
 import Header from './Header';
+import { fetchPostChat } from '@/helpers/fetchData';
 
 export default function ChatContainer() {
   const { formData, logged, showLogin, showRegister } = useContext(ChatBotContext);
@@ -22,6 +23,17 @@ export default function ChatContainer() {
     developAnswer('bot', interpreter(lastInput));
   }, [submit]);
 
+  const postChatData = async () => {
+    const currentDate = new Date();
+    const currentDateTime = currentDate.toISOString();
+
+    await fetchPostChat({
+      username: formData.username,
+      conversation: chatLog,
+      date: currentDateTime
+    });
+  };
+
   const developAnswer = (type, message) => {
     if (typeof message === 'string') {
       setChatLog((prevChatLog) => [
@@ -30,8 +42,13 @@ export default function ChatContainer() {
       ]);
       setShowOpt(false);
       setShowLink(false);
+
       if (message.startsWith('Please')) {
         setShowOpt(true);
+      }
+
+      if (message.startsWith('See you')) {
+        postChatData();
       }
     }
 

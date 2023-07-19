@@ -35,23 +35,39 @@ export async function register(body) {
 }
 
 export async function login(body) {
-  await dbConnection();
-  const userLoginArray = await userModel.find({ username: body.username });
-  const userLogin = userLoginArray[0];
-  console.log('User Login', userLogin);
-  console.log('body', body);
-  if (!userLogin) throw new Error('User not found');
-  if (userLogin.password !== body.password) throw new Error('Incorrect password');
+  try {
+    await dbConnection();
+    const userLoginArray = await userModel.find({ username: body.username });
+    const userLogin = userLoginArray[0];
+    if (!userLogin) throw new Error('User not found');
+    if (userLogin.password !== body.password) throw new Error('Incorrect password');
 
-  const token = createToken(userLogin);
-  return token;
+    const token = createToken(userLogin);
+    return token;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 }
 
-export async function chat() {
-  await dbConnection();
+// export async function conversation(body) {
+//   try {
+//     await dbConnection();
+//     const userLoginArray = await userModel.find({ username: body.username });
+//     const userLogin = userLoginArray[0];
+//     if (!userLogin) throw new Error('User not found');
+//     if (userLogin.password !== body.password) throw new Error('Incorrect password');
 
-  const data = await userModel.find().lean();
-  if (!data) throw new Error('data not found');
+//     return body;
+//   } catch (err) {
+//     throw new Error(err.message);
+//   }
+// }
 
-  return (data);
-}
+// export async function chat() {
+//   await dbConnection();
+
+//   const data = await userModel.find().lean();
+//   if (!data) throw new Error('data not found');
+
+//   return (data);
+// }

@@ -8,7 +8,7 @@ export default function interpreter(term) {
       return 'Of course! I\'m here to help! If you want to know more about loans, type "loan"';
     }
     if (termLC.match('goodbye')) {
-      return 'See you later';
+      return 'See you later. To access the chat history click on your username in the Header';
     }
     if (termLC.match('loan conditions')) {
       return {

@@ -38,9 +38,9 @@ export async function fetchLogin(data) {
   }
 }
 
-export async function fetchChat() {
+export async function fetchGetChat() {
   try {
-    const response = await fetch('/api/user/chat', {
+    const response = await fetch('/api/chat', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     });
@@ -55,5 +55,25 @@ export async function fetchChat() {
     return jsonData;
   } catch (err) {
     throw new Error(err.message || 'Unknown error occurred');
+  }
+}
+
+export async function fetchPostChat(data) {
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const json = await response.json();
+
+    if (response.status !== 201) {
+      throw new Error(json);
+    }
+
+    return json;
+  } catch (err) {
+    throw new Error(err.message);
   }
 }
