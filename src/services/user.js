@@ -23,13 +23,10 @@ export function verification(token) {
 export async function register(body) {
   try {
     await dbConnection();
-    console.log('Registering user:', body);
     const registered = await userModel.find({ username: body.username });
     if (registered.length > 0) throw new Error('User already registered');
     const newUser = new userModel(body);
-    console.log('New user:', newUser);
-    const savedUser = await newUser.save();
-    console.log('Saved user:', savedUser);
+    await newUser.save();
     const token = createToken(body);
     return token;
   } catch (err) {

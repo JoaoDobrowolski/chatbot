@@ -7,7 +7,7 @@ const URL = `mongodb+srv://joaodobrowolski:${PASSWORD}@chattt.sb2abpc.mongodb.ne
 
 const dbConnection = async () => {
   if (!global.mongoose) {
-    mongoose.set('strictQuery', true); // to not show the annoying alert
+    mongoose.set('strictQuery', true);
     global.mongoose = await mongoose.connect(URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
