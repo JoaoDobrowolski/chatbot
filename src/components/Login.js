@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import ChatBotContext from '@/context/ChatBotContext';
-import { fetchLogin } from '@/services/fetchData';
+import { fetchLogin } from '@/helpers/fetchData';
 
 export default function Login({ ...props }) {
   const { formData, setFormData, setLogged, setShowLogin, setShowRegister } = useContext(ChatBotContext);

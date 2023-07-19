@@ -1,7 +1,7 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import ChatBotContext from '@/context/ChatBotContext';
-import { fetchRegister } from '@/services/fetchData';
+import { fetchRegister } from '@/helpers/fetchData';
 
 export default function Register() {
   const { formData, setFormData, setLogged, setShowRegister, setShowLogin } = useContext(ChatBotContext);

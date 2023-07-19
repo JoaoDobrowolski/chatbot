@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Login from './Login';
 import ChatBotContext from '@/context/ChatBotContext';
 import Register from './Register';
+import Header from './Header';
 
 export default function ChatContainer() {
   const { formData, logged, showLogin, showRegister } = useContext(ChatBotContext);
@@ -15,7 +16,6 @@ export default function ChatContainer() {
   const [showLink, setShowLink] = useState(false);
   const [wichLink, setWichLink] = useState(false);
   const [geStarted, setGetStarted] = useState(true);
-  // const [showLogin, setShowLogin] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -94,6 +94,7 @@ export default function ChatContainer() {
 
   return (
     <div className="bg-gradient-to-r from-violet-600 from-30% via-violet-800 via-50% to-violet-600 to 70%">
+      <Header />
       <div className="container mx-auto max-w-[700px]">
         <div className="flex flex-col h-screen overflow-y-auto" ref={chatContainerRef}>
           <div className="flex-grow p-6">
